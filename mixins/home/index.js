@@ -20,8 +20,8 @@ export default {
   },
 
   mounted() {
-    this.$hiwebBase.seo.setTitle(process.env.NODE_ENV === 'production' ? window.shop.title : '');
-    this.$hiwebBase.seo.setDescription(process.env.NODE_ENV === 'production' ? window.shop.description : '');
+    this.$hiwebBase.seo.setTitle('Home');
+    this.$hiwebBase.seo.setDescription('');
   },
 
   methods: {

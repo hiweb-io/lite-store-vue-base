@@ -1,13 +1,14 @@
 import $ from 'jquery';
+import hiweb from 'lite-store-vue-base';
 
 class Seo {
 
   constructor() {
-    this.siteName = (process.env.NODE_ENV === 'production') ? window.shop.name : 'Development';
+
   }
 
   setTitle(title) {
-    $('title').html(title + ' - ' + this.siteName);
+    $('title').html(title + ' - ' + (hiweb.store.state.options.options ? hiweb.store.state.options.options.site_name : ''));
   }
 
   setDescription(description) {
