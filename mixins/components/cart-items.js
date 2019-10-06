@@ -110,18 +110,36 @@ export default {
     getSearchString() {
 
       let tagIds = [];
+      let titleSearch = [];
 
       for (let i = 0; i < this.cartItemsJsonApi.document.included.length; i++) {
 
+        // Find products
         if (this.cartItemsJsonApi.document.included[i].type === 'products') {
           
+          // Find tag ids
           for (let k = 0; k < this.cartItemsJsonApi.document.included[i].relationships.tags.data.length; k++) {
             tagIds.push(this.cartItemsJsonApi.document.included[i].relationships.tags.data[k].id);
+          }
+
+          // Find title words
+          let words = this.cartItemsJsonApi.document.included[i].attributes.title.split(' ');
+
+          // If word not in title search yet
+          for (let z = 0; z <= words.length; z++) {
+
+            if (titleSearch.indexOf(words[z]) === -1) {
+              titleSearch.push(words[z]);
+            }
+
           }
 
         }
 
       }
+
+      // Search string
+      let search = '';
 
       // Load tags
       if (tagIds.length) {
@@ -130,16 +148,21 @@ export default {
           'filter[ids]': tagIds.join()
         }).then(response => {
 
-          let search = '';
           for (let i = 0; i < response.data.data.length; i++) {
             search += response.data.data[i].attributes.name + ' ';
           }
 
-          this.searchString = search;
+          
 
         });
 
+      } 
+
+      if (titleSearch.length) {
+        search += ' ' + titleSearch.join(' ');
       }
+
+      this.searchString = search;
         
     }
 

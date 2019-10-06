@@ -211,6 +211,8 @@ export default {
           search += tags[i].attributes.name + ' ';
         }
 
+      } else {
+        search = this.productJsonApi.attributes.title + ' ';
       }
 
       // Collection
