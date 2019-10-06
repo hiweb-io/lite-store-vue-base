@@ -107,7 +107,7 @@ export default {
       this.isLoading = false;
     },
 
-    getSearchString() {
+    async getSearchString() {
 
       let tagIds = [];
       let titleSearch = [];
@@ -144,17 +144,18 @@ export default {
       // Load tags
       if (tagIds.length) {
         
-        api.get('tags', {
+        let error = false;
+        let response = await api.get('tags', {
           'filter[ids]': tagIds.join()
-        }).then(response => {
+        }).catch(e => {
+          error = e;
+        });
 
+        if (!error) {
           for (let i = 0; i < response.data.data.length; i++) {
             search += response.data.data[i].attributes.name + ' ';
           }
-
-          
-
-        });
+        }
 
       } 
 
