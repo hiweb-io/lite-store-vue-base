@@ -1,0 +1,25 @@
+{
+  "name": "lite-store-vue-base",
+  "version": "1.0.0",
+  "description": "Base storefront mixins and helper functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiweb-io/lite-store-vue-base.git"
+  },
+  "keywords": [
+    "hiweb"
+  ],
+  "author": "Khanh Doan <k@hiweb.com> (https://hiweb.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiweb-io/lite-store-vue-base/issues"
+  },
+  "homepage": "https://github.com/hiweb-io/lite-store-vue-base",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}
