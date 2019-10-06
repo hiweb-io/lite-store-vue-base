@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import hiweb from 'lite-store-vue-base';
 
 class Seo {
 
@@ -8,7 +7,7 @@ class Seo {
   }
 
   setTitle(title) {
-    $('title').html(title + ' - ' + (hiweb.store.state.options.options ? hiweb.store.state.options.options.site_name : ''));
+    $('title').html(title);
   }
 
   setDescription(description) {
