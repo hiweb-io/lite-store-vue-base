@@ -213,13 +213,13 @@ export default {
 
         for (let i = 0; i < collections.length; i++) {
           
-          let collectionTitle = collections[i].attributes.title;
+          let collectionTitle = collections[i].attributes.title.toLowerCase();
           collectionTitle = collectionTitle.split(' ');
 
           for (let k = 0; k < collectionTitle.length; k++) {
 
             if (collectionWords.indexOf(collectionTitle[k]) === -1) {
-              collectionWords.push(collectionTitle[k].toLowerCase());
+              collectionWords.push(collectionTitle[k]);
             }
 
           }
