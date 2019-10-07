@@ -200,7 +200,47 @@ export default {
     },
 
     searchString: function() {
-      return this.productJsonApi.document.data.attributes.title;
+
+      let search = '';
+
+      // Tag
+      search = this.productJsonApi.document.data.attributes.title;
+
+      // Collection
+      let collectionWords = [];
+      let collections = this.productJsonApi.findRelationshipResources(this.productJsonApi.document.data, 'collections');
+      if (collections) {
+
+        for (let i = 0; i < collections.length; i++) {
+          
+          let collectionTitle = collections[i].attributes.title;
+          collectionTitle = collectionTitle.split(' ');
+
+          for (let k = 0; k < collectionTitle.length; k++) {
+
+            if (collectionWords.indexOf(collectionTitle[k]) === -1) {
+              collectionWords.push(collectionTitle[k].toLowerCase());
+            }
+
+          }
+
+        }
+
+      }
+
+      search = search.toLowerCase().split(' ');
+
+      for (let i = 0; i < search.length; i++) {
+
+        // Remove collection word
+        if (collectionWords.indexOf(search[i]) !== -1) {
+          search.splice(i, 1);
+        }
+
+      }
+
+      return search.join(' ');
+
     },  
 
     tagIds: function() {
