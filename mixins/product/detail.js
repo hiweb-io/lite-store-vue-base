@@ -230,11 +230,12 @@ export default {
 
       search = search.toLowerCase().split(' ');
 
-      for (let i = 0; i < search.length; i++) {
+      for (let i = 0; i < search.length; i++) { 
 
         // Remove collection word
         if (collectionWords.indexOf(search[i]) !== -1) {
           search.splice(i, 1);
+          i--;
         }
 
       }
