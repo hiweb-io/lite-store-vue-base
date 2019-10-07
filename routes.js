@@ -60,6 +60,13 @@ class Routes {
       },
 
       {
+        props: true,
+        path: '/checkout',
+        name: 'checkout.index',
+        component: this.component('checkout.index')
+      },
+
+      {
         path: '/payment/successful',
         name: 'payment.successful',
         component: this.component('payment.successful')

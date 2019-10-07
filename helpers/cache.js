@@ -2,7 +2,23 @@ class Cache {
 
   constructor() {
 
-    this.storage = window.localStorage;
+    this.storage = {
+      data: {},
+      setItem(key, value) {
+        this.data[key] = value;
+      },
+      getItem(key) {
+        return (typeof this.data[key] !== 'undefined') ? this.data[key] : null;
+      },
+      removeItem(key) {
+
+        if (typeof this.data[key] !== 'undefined') {
+          delete this.data[key];
+        }
+
+      }
+    };
+
     this.prefix = 'lsvb-';
 
     // Cache should be loaded again if refresh browser
@@ -10,7 +26,7 @@ class Cache {
 
   }
 
-  put(key, value, minutes) { return true;
+  put(key, value, minutes) {
 
     if (!this.storage) {
       return false;
@@ -33,7 +49,7 @@ class Cache {
 
   }
 
-  get(key, defaultValue) { return defaultValue ? defaultValue : null;
+  get(key, defaultValue) {
 
     if (!this.storage || !this.loaded[this.prefix + key]) {
       return defaultValue ? defaultValue : null;

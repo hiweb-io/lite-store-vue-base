@@ -17,6 +17,11 @@ export default {
 
     this.loadCartItems();
 
+    // Reload event
+    this.$hiwebBase.event.$on('reload-cart-items', () => {
+      this.loadCartItems();
+    });
+
   },
 
   methods: {

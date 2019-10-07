@@ -34,8 +34,8 @@ class Api {
       if (this.isLoading[cacheKey]) {
 
         // Wait for it
-        return await new Promise(done => {
-
+        return resolve(await new Promise(done => {
+        
           let wait = setInterval(() => {
 
             // Loaded
@@ -50,7 +50,7 @@ class Api {
 
           }, 100);
 
-        });
+        }));
 
       }
 

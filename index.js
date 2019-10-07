@@ -13,6 +13,9 @@ import optionStore from './store/options';
 
 import routes from './routes';
 
+// Event bus
+import event from './helpers/event';
+
 // Mixins
 import breadcrumbMixin from './mixins/components/breadcrumb';
 import paginationMixin from './mixins/components/pagination';
@@ -24,6 +27,7 @@ import relatedProductsMixin from './mixins/components/related-products';
 import appMixin from './mixins/app';
 
 import cartMixin from './mixins/cart/index';
+import checkoutMixin from './mixins/checkout/index';
 
 import collectionsCollectionMixin from './mixins/collection/collection';
 import collectionsDetailMixin from './mixins/collection/detail';
@@ -53,6 +57,10 @@ const mixins = {
 
   cart: {
     index: cartMixin
+  },
+
+  checkout: {
+    index: checkoutMixin
   },
 
   collection: {
@@ -92,6 +100,9 @@ export default {
 
     // Add store to base
     base.store = store;
+
+    // Event
+    base.event = event;
 
     // Register vuex module
     store.registerModule('cart', cartStore);

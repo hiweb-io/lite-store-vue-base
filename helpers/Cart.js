@@ -1,6 +1,5 @@
 import cookie from './cookie';
 import api from './api';
-
 import JsonApi from './JsonApi';
 
 class Cart {
