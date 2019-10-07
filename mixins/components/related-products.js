@@ -65,6 +65,12 @@ export default {
   watch: {
 
     search: function() {
+      this.relatedProducts = {
+        data: [],
+        included: []
+      };
+      this.page = 1;
+      this.over = false;
       this.loadRelatedProducts();
     },
 
