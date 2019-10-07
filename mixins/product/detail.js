@@ -200,33 +200,7 @@ export default {
     },
 
     searchString: function() {
-
-      let search = '';
-
-      // Tag
-      let tags = this.productJsonApi.findRelationshipResources(this.productJsonApi.document.data, 'tags');
-      if (tags) {
-
-        for (let i = 0; i < tags.length; i++) {
-          search += tags[i].attributes.name + ' ';
-        }
-
-      } else {
-        search = this.productJsonApi.attributes.title + ' ';
-      }
-
-      // Collection
-      let collections = this.productJsonApi.findRelationshipResources(this.productJsonApi.document.data, 'collections');
-      if (collections) {
-
-        for (let i = 0; i < collections.length; i++) {
-          search += collections[i].attributes.title + ' ';
-        }
-
-      }
-
-      return search;
-
+      return this.productJsonApi.document.data.attributes.title;
     },  
 
     tagIds: function() {

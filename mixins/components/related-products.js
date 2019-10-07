@@ -32,13 +32,19 @@ export default {
 
       this.isLoading = true;
 
-      // Load related products
-      this.$hiwebBase.api.get('products', {
+      let params = {
         'filter[search]': this.search,
         limit: this.limit ? this.limit : 8,
         page: this.page,
-        sort: '-created_at'
-      }, true).then(response => {
+        sort: '-created_at',
+      };
+
+      if (this.excludeIds) {
+        params['filter[exclude_ids]'] = this.excludeIds.join(',');
+      }
+
+      // Load related products
+      this.$hiwebBase.api.get('products', params, true).then(response => {
 
         this.isLoading = false;
 

@@ -6,9 +6,11 @@ export default {
   data() {
 
     return {
+      loadNew: true,
       isLoading: true,
       cartItemsJsonApi: null,
-      searchString: null
+      searchString: null,
+      excludeSearchIds: []
     };
 
   },
@@ -37,7 +39,7 @@ export default {
         let error = null;
         let cartItems = await api.get('carts/' + this.cart.data.id + '/cart_items', {
           'excludes[products]': 'content'
-        }, true).catch(e => {
+        }, this.loadNew).catch(e => {
           error = e;
         });
 
@@ -137,6 +139,11 @@ export default {
               titleSearch.push(words[z]);
             }
 
+          }
+
+          // Exclude product ids
+          if (this.excludeSearchIds.indexOf(this.cartItemsJsonApi.document.included[i].id) === -1) {
+            this.excludeSearchIds.push(this.cartItemsJsonApi.document.included[i].id);
           }
 
         }
