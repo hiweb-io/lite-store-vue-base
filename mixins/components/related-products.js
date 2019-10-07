@@ -69,9 +69,14 @@ export default {
         data: [],
         included: []
       };
-      this.page = 1;
       this.over = false;
-      this.loadRelatedProducts();
+
+      if (this.page !== 1) {
+        this.page = 1; // Page change will auto reload
+      } else { // Same page, manually reload
+        this.loadRelatedProducts();
+      }
+      
     },
 
     page: function() {
