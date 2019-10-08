@@ -39,6 +39,11 @@ export default {
       }).then(response => {
         this.isSuccess = true;
         this.isSending = false;
+
+        this.name = '';
+        this.email = '';
+        this.message = '';
+
       }).catch(error => {
 
         try {
