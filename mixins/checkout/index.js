@@ -12,7 +12,7 @@ export default {
       fullName: '',
       address: '',
       city: '',
-      province: '',
+      province: 'AL',
       zip: '',
       countryCode: 'US',
 
