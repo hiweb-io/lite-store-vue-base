@@ -14,6 +14,9 @@ export default {
       zip: '',
       countryCode: 'US',
 
+      isPlacingOrder: false,
+      addressErrors: [],
+
       isLoadingPaymentAccounts: true,
       paymentAccounts: [],
 
@@ -23,6 +26,7 @@ export default {
 
   created() {
     this.getPaymentAccounts();
+    this.loadAddress();
   },
 
   methods: {
@@ -35,8 +39,104 @@ export default {
         this.paymentAccounts = response.data.data;
         this.isLoadingPaymentAccounts = false;
       }).catch(e => {
+        this.paymentMethod = '';
         this.isLoadingPaymentAccounts = false;
       });
+
+    },
+
+    loadAddress() {
+
+      if (this.$hiwebBase.cookie.getCookie('address-id')) {
+        
+        this.$hiwebBase.api.get('addresses/' + this.$hiwebBase.cookie.getCookie('address-id')).then(response => {
+          this.email = response.data.data.attributes.email;
+          this.fullName = response.data.data.attributes.full_name;
+          this.address = response.data.data.attributes.address1;
+          this.city = response.data.data.attributes.city;
+          this.province = response.data.data.attributes.province;
+          this.zip = response.data.data.attributes.zip;
+          this.countryCode = response.data.data.attributes.country_code;
+        });
+
+      }
+
+    },
+
+    async placeOrder() {
+
+      this.isPlacingOrder = true;
+
+      // Create address
+      this.addressErrors = [];
+      let createAddress = await this.$hiwebBase.api.post('addresses', {
+        data: {
+          type: 'addresses',
+          attributes: {
+            email: this.email,
+            full_name: this.fullName,
+            address1: this.address,
+            city: this.city,
+            province: this.province,
+            zip: this.zip,
+            country_code: this.countryCode
+          }
+        }
+      }).catch(e => {
+        this.addressErrors = e.responseJSON.errors;
+      });
+
+      if (this.addressErrors.length) {
+        this.isPlacingOrder = false;
+        return;
+      }
+
+      // Save address to cookie
+      this.$hiwebBase.cookie.setCookie('address-id', createAddress.data.data.id);
+
+      // Attach address to cart
+      let cartUpdateError = false;
+      let cartUpdate = await this.$hiwebBase.cart.update({
+        address_id: createAddress.data.data.id
+      }).catch(e => {
+        cartUpdateError = e.responseJSON.errors;
+      });
+
+      if (cartUpdateError) {
+        alert(cartUpdateError[0].title);
+        this.isPlacingOrder = false;
+        return;
+      }
+
+      // Redirect to payment
+      if (this.paymentMethod === 'paypal') {
+        window.location = '/payment/paypal/create/' + this.cart.data.id;
+        return;
+      } else if (this.paymentMethod === 'stripe') {
+        this.isPlacingOrder = false;
+        alert('This payment method is not supported yet');
+        return;
+      } else {
+        this.isPlacingOrder = false;
+        alert('No payment methods available');
+        return;
+      }
+      
+    }
+
+  },
+
+  watch: {
+
+    countryCode: function(value) {
+
+      if (value === 'US') {
+        this.province = 'AL';
+      }
+
+      if (value === 'CA') {
+        this.province = 'AB';
+      }
 
     }
 
