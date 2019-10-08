@@ -29,7 +29,7 @@ class Image {
 
   resize(image, size, crop) {
 
-    let resizeUrl = 'https://storage.googleapis.com/fulfill/';
+    let resizeUrl = 'https://clickfulfill.appspot.com/';
 
     size = size > 0 ? size : 300;
     crop = crop ? 1 : false;
