@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export default {
 
   data() {
@@ -110,8 +112,31 @@ export default {
 
       // Redirect to payment
       if (this.paymentMethod === 'paypal') {
-        window.location = '/payment/paypal/create/' + this.cart.data.id;
+        
+        // Get payment url
+        $.ajax({
+          url: '/payment/paypal/create/' + this.cart.data.id,
+          dataType: 'json',
+          success: result => {
+
+            if (result.status === 'success') {
+              window.location = result.approval_url;
+              return;
+            }
+
+            alert('Failed to redirect you to payment page, please contact us');
+            return;
+
+          },
+          error: error => {
+            alert('Failed to redirect you to payment page, please contact us');
+            return;
+          }
+          
+        });
+        
         return;
+
       } else if (this.paymentMethod === 'stripe') {
         this.isPlacingOrder = false;
         alert('This payment method is not supported yet');
