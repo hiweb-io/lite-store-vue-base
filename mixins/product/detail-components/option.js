@@ -30,7 +30,7 @@ export default {
         return false;
       }
 
-      return this.$parent.activeVariant.attributes['option' + (index+1)] === value;
+      return this.$parent.activeVariant.attributes['option' + this.index] === value;
 
     },
 
