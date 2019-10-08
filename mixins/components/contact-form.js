@@ -7,7 +7,6 @@ export default {
 
     return {
       name: '',
-      phone: '',
       email: '',
       message: '',
 
@@ -32,8 +31,7 @@ export default {
         data: {
           type: 'contacts',
           attributes: {
-            name: this.name,
-            phone: this.phone,
+            full_name: this.name,
             email: this.email,
             message: this.message
           }
