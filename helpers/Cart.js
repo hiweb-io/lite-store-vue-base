@@ -150,8 +150,16 @@ class Cart {
           }
         }
       }).catch(error => {
-        alert(typeof error.response === 'undefined' ? error.message : error.response.data.errors[0].title);
-        return resolve(null);
+
+        let errorMessage = typeof error.response === 'undefined' ? error.message : error.response.data.errors[0].title;
+
+        if (!errorMessage) {
+          errorMessage = 'Our server is currently busy due to too many visitors, please try again. We are so sorry for the inconvenience';
+        }
+
+        alert(errorMessage);
+
+        return resolve(error);
       });;
 
       // Reload cart
