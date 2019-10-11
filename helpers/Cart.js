@@ -159,7 +159,7 @@ class Cart {
 
         alert(errorMessage);
 
-        return resolve(error);
+        return reject(error);
       });;
 
       // Reload cart
