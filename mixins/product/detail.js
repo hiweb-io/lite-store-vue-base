@@ -131,7 +131,7 @@ export default {
 
       this.addingToCart = false;
 
-      if (!error) {
+      if (!error && cartItem && typeof cartItem === 'object') {
         // Redirect to cart page
         this.$router.push({ name: 'cart.index' });
       }
