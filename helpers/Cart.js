@@ -119,8 +119,14 @@ class Cart {
                 response = JSON.parse(response);
               }
 
-              alert(typeof response.errors === 'undefined' ? error.message : response.errors[0].title);
-              return reject(null);
+              let errorMessage = typeof response.errors === 'undefined' ? error.message : response.errors[0].title;
+
+              if (!errorMessage) {
+                errorMessage = 'Our server is currently busy due to too many visitors, please try again. We are so sorry for the inconvenience';
+              }
+
+              alert(errorMessage);
+              return reject(error);
             });
 
             // Reload cart
