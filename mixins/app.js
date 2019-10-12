@@ -21,7 +21,20 @@ export default {
     }
 
     // Save option to store
-    this.$hiwebBase.store.commit('options/options', this.options);
+    this.$hiwebBase.store.commit('options/setOptions', this.options);
+
+    // Load site menus
+    let menuErrors = null;
+    let menus = await this.$hiwebBase.api.get('menus').catch(e => {
+      menuErrors = e;
+    });
+
+    // Error occurred
+    if (menuErrors) {
+      this.$hiwebBase.store.commit('menus/setIsLoading', false);
+    } else { // No errors
+      this.$hiwebBase.store.commit('menus/setMenus', new this.$hiwebBase.JsonApi(menus.data));
+    }
 
   }
 

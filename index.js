@@ -10,6 +10,7 @@ import router from './helpers/router';
 
 import cartStore from './store/cart';
 import optionStore from './store/options';
+import menuStore from './store/menus';
 
 import routes from './routes';
 
@@ -107,6 +108,7 @@ export default {
     // Register vuex module
     store.registerModule('cart', cartStore);
     store.registerModule('options', optionStore);
+    store.registerModule('menus', menuStore);
 
     // Inject store to cart
     const cart = new Cart(store);

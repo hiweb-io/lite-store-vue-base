@@ -1,5 +1,3 @@
-import JsonApi from '../helpers/JsonApi';
-
 export default {
 
   namespaced: true,
@@ -10,7 +8,7 @@ export default {
 
   mutations: {
 
-    options(state, options) {
+    setOptions(state, options) {
       state.options = options;
     }
 
