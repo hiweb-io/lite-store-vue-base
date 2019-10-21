@@ -64,6 +64,26 @@ export default {
 
   computed: {
 
+    optionValues() {
+
+      let values = [];
+
+      if (!this.variants || !this.variants.length) {
+        return values;
+      }
+
+      for (let i = 0; i < this.variants.length; i++) {
+
+        if (values.indexOf(this.variants[i].attributes['option' + this.index]) === -1) {
+          values.push(this.variants[i].attributes['option' + this.index]);
+        }
+
+      }
+
+      return values;
+
+    },
+
     activeVariant: {
 
       get: function() {
