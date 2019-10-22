@@ -87,7 +87,8 @@ export default {
       // Sort it
       let sortedValues = {};
 
-      for (let optionValue in price) {
+      for (let optionValue in values) {
+        let price = values[optionValue];
         sortedValues[price] = optionValue;
       }
 
