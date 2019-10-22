@@ -66,7 +66,7 @@ export default {
 
     optionValues() {
 
-      let values = [];
+      let values = {};
 
       if (!this.variants || !this.variants.length) {
         return values;
@@ -74,13 +74,24 @@ export default {
 
       for (let i = 0; i < this.variants.length; i++) {
 
-        if (values.indexOf(this.variants[i].attributes['option' + this.index]) === -1) {
-          values.push(this.variants[i].attributes['option' + this.index]);
+        let price = parseInt(this.variants[i].attributes.price*100);
+
+        let optionKey = this.variants[i].attributes['option' + this.index];
+
+        if (typeof values[optionKey] === 'undefined' || price < values[optionKey]) {
+          values[optionKey] = price;
         }
 
       }
 
-      return values;
+      // Sort it
+      let sortedValues = {};
+
+      for (let optionValue in price) {
+        sortedValues[price] = optionValue;
+      }
+
+      return Object.values(sortedValues);
 
     },
 
