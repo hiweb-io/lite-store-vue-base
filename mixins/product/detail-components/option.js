@@ -69,7 +69,7 @@ export default {
       let values = {};
 
       if (!this.variants || !this.variants.length) {
-        return values;
+        return [];
       }
 
       for (let i = 0; i < this.variants.length; i++) {
@@ -85,14 +85,29 @@ export default {
       }
 
       // Sort it
-      let sortedValues = {};
+      let sortedValues = [];
 
       for (let optionValue in values) {
+        
         let price = values[optionValue];
-        sortedValues[price] = optionValue;
+
+        sortedValues.push({
+          price: price,
+          value: optionValue
+        });
       }
 
-      return Object.values(sortedValues);
+      sortedValues.sort((a, b) => {
+        return a.price - b.price;
+      });
+
+      let finalData = [];
+
+      for (let i = 0; i < sortedValues.length; i++) {
+        finalData.push(sortedValues[i].value);
+      }
+
+      return Object.values(finalData);
 
     },
 
