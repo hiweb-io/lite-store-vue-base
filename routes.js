@@ -89,6 +89,13 @@ class Routes {
         path: '/pages/:slug',
         name: 'page.detail',
         component: this.component('page.detail')
+      },
+
+      {
+        props: true,
+        path: '/upsell',
+        name: 'upsell.index',
+        component: this.component('upsell.index')
       }
 
     ];
