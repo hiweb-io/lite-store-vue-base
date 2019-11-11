@@ -34,7 +34,7 @@ export default {
 
       let params = {
         'filter[search]': this.search,
-        limit: this.limit ? this.limit : 8,
+        limit: this.limit ? this.limit : 20,
         page: this.page,
         sort: '-created_at',
       };
