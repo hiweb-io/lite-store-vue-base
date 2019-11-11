@@ -1,3 +1,5 @@
+import cookie from '../../helpers/cookie';
+
 export default {
 
   props: ['slug'],
@@ -93,6 +95,16 @@ export default {
 
       // Set active variant
       this.setActiveVariant();
+      if (!cookie.getCookie('product-ids')) {
+        cookie.setCookie('product-ids', this.productJsonApi.document.data.id)
+      }else{
+        var productIds = cookie.getCookie('product-ids');
+        if (!productIds.includes(this.productJsonApi.document.data.id)) {
+          productIds += ','+this.productJsonApi.document.data.id;
+          cookie.setCookie('product-ids', productIds);
+          
+        }
+      }
 
       this.isLoading = false;
 
