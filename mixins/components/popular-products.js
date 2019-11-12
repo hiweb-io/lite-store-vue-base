@@ -3,13 +3,13 @@ import cookie from '../../helpers/cookie';
 
 export default {
 
-    props: ['search', 'excludeIds', 'limit'],
+    props: ['limit'],
   
     data() {
   
       return {
         isLoading: true,
-        recentlyViewedProducts: {
+        popularProducts: {
           data: [],
           included: []
         },
@@ -21,25 +21,22 @@ export default {
   
     created() {
   
-      this.loadrecentlyViewedProducts();
+      this.loadPopularProducts();
   
     },
   
     methods: {
   
-      loadrecentlyViewedProducts() {
+      loadPopularProducts() {
   
         this.isLoading = true;
         
         let params = {
           limit: this.limit ? this.limit : 20,
           page: this.page,
-          sort: '-created_at',
+          sort: '-order_count',
         };
 
-        if (cookie.getCookie('product-ids')) {
-            params['filter[ids]'] = cookie.getCookie('product-ids');
-        }
   
         // if (this.excludeIds) {
         //   params['filter[exclude_ids]'] = this.excludeIds.join(',');
@@ -50,10 +47,10 @@ export default {
   
           this.isLoading = false;
   
-          let recentlyViewedProducts = response.data;
+          let popularProducts = response.data;
   
-          this.recentlyViewedProducts.data = this.recentlyViewedProducts.data.concat(recentlyViewedProducts.data);
-          this.recentlyViewedProducts.included = this.recentlyViewedProducts.included.concat(recentlyViewedProducts.included);
+          this.popularProducts.data = this.popularProducts.data.concat(popularProducts.data);
+          this.popularProducts.included = this.popularProducts.included.concat(popularProducts.included);
   
         }).catch(error => {
           this.isLoading = false;
@@ -67,7 +64,7 @@ export default {
     watch: {
   
       search: function() {
-        this.recentlyViewedProducts = {
+        this.popularProducts = {
           data: [],
           included: []
         };
@@ -76,21 +73,21 @@ export default {
         if (this.page !== 1) {
           this.page = 1; // Page change will auto reload
         } else { // Same page, manually reload
-          this.loadrecentlyViewedProducts();
+          this.loadPopularProducts();
         }
         
       },
   
       page: function() {
-        this.loadrecentlyViewedProducts();
+        this.loadPopularProducts();
       }
   
     },
   
     computed: {
   
-      recentlyViewedProductsJsonApi: function() {
-        return new this.$hiwebBase.JsonApi(this.recentlyViewedProducts);
+      popularProductsJsonApi: function() {
+        return new this.$hiwebBase.JsonApi(this.popularProducts);
       }
   
     }

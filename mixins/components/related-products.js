@@ -33,7 +33,7 @@ export default {
       this.isLoading = true;
 
       let params = {
-        'filter[search]': this.search,
+        // 'filter[search]': this.search,
         limit: this.limit ? this.limit : 20,
         page: this.page,
         sort: '-created_at',
