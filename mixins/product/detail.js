@@ -145,7 +145,7 @@ export default {
 
       if (!error && cartItem && typeof cartItem === 'object') {
         // Redirect to cart page
-        this.$router.push({ name: 'cart.index' });
+        this.$router.push({ name: 'checkout.index' });
       }
 
       // Dispatch event
