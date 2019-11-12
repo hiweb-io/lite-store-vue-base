@@ -1,6 +1,6 @@
 export default {
 
-  props: ['search', 'excludeIds', 'limit'],
+  props: ['search', 'excludeIds', ],
 
   data() {
 
@@ -12,6 +12,9 @@ export default {
       },
       page: 1,
       over: false,
+      countProducts:null,
+      currentLoadProducts:20,
+      limit:20,
     };
 
   },
@@ -52,7 +55,9 @@ export default {
 
         this.relatedProducts.data = this.relatedProducts.data.concat(relatedProducts.data);
         this.relatedProducts.included = this.relatedProducts.included.concat(relatedProducts.included);
-
+        this.currentLoadProducts = relatedProducts.data.length;
+        this.countProducts = this.relatedProducts.data.length;
+        this.reInit();
       }).catch(error => {
         this.isLoading = false;
         this.over = true;

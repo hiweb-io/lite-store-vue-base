@@ -3,7 +3,7 @@ import cookie from '../../helpers/cookie';
 
 export default {
 
-    props: ['search', 'excludeIds', 'limit'],
+    // props: ['search', 'excludeIds', 'limit'],
   
     data() {
   
@@ -15,6 +15,9 @@ export default {
         },
         page: 1,
         over: false,
+        limit: 20,
+        countProducts:null,
+        currentLoadProducts:20,
       };
   
     },
@@ -54,6 +57,9 @@ export default {
   
           this.recentlyViewedProducts.data = this.recentlyViewedProducts.data.concat(recentlyViewedProducts.data);
           this.recentlyViewedProducts.included = this.recentlyViewedProducts.included.concat(recentlyViewedProducts.included);
+          this.currentLoadProducts = recentlyViewedProducts.data.length;
+          this.countProducts = this.recentlyViewedProducts.data.length;
+          this.reInit();
   
         }).catch(error => {
           this.isLoading = false;

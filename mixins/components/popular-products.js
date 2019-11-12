@@ -3,7 +3,7 @@ import cookie from '../../helpers/cookie';
 
 export default {
 
-    props: ['limit'],
+    // props: ['limit'],
   
     data() {
   
@@ -13,6 +13,9 @@ export default {
           data: [],
           included: []
         },
+        countProducts:null,
+        currentLoadProducts:20,
+        limit:20,
         page: 1,
         over: false,
       };
@@ -31,6 +34,10 @@ export default {
   
         this.isLoading = true;
         
+        if (!this.limit) {
+            this.limit = 20;
+        }
+
         let params = {
           limit: this.limit ? this.limit : 20,
           page: this.page,
@@ -41,7 +48,7 @@ export default {
         // if (this.excludeIds) {
         //   params['filter[exclude_ids]'] = this.excludeIds.join(',');
         // }
-  
+        
         // Load related products
         this.$hiwebBase.api.get('products', params, true).then(response => {
   
@@ -51,7 +58,9 @@ export default {
   
           this.popularProducts.data = this.popularProducts.data.concat(popularProducts.data);
           this.popularProducts.included = this.popularProducts.included.concat(popularProducts.included);
-  
+          this.currentLoadProducts = popularProducts.data.length;
+          this.countProducts = this.popularProducts.data.length;
+            this.reInit();
         }).catch(error => {
           this.isLoading = false;
           this.over = true;
@@ -78,9 +87,9 @@ export default {
         
       },
   
-      page: function() {
-        this.loadPopularProducts();
-      }
+    //   page: function() {
+    //     this.loadPopularProducts();
+    //   }
   
     },
   
