@@ -26,6 +26,7 @@ import productBoxMixin from './mixins/components/product-box';
 import relatedProductsMixin from './mixins/components/related-products';
 import recentlyViewedProductsMixin from './mixins/components/recently-viewed-products';
 import customerReviewsMixin from './mixins/components/customer-reviews';
+import popularProductsMixin from './mixins/components/popular-products';
 
 import appMixin from './mixins/app';
 
@@ -57,7 +58,8 @@ const mixins = {
     productBox: productBoxMixin,
     relatedProducts: relatedProductsMixin,
     recentlyViewedProducts: recentlyViewedProductsMixin,
-    customerReviews: customerReviewsMixin
+    customerReviews: customerReviewsMixin,
+    popularProducts: popularProductsMixin,
   },
 
   cart: {
