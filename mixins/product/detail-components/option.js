@@ -13,7 +13,7 @@ export default {
   created() {
 
     // If only 1 variant available
-    if (this.variants.length === 1) {
+    if (this.variants && this.variants.length === 1) {
       this.selectedOptionValue = this.variants[0].attributes['option' + this.index];
     }
 
