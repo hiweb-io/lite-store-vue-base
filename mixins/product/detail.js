@@ -54,12 +54,12 @@ export default {
       this.isLoading = true;
 
       // If cache exists
-      let cacheKey = 'products/' + this.slug + JSON.stringify({});
-      let cache = this.$hiwebBase.cache.get(cacheKey);
-      if (cache !== null) {
-        this.productJsonApi = new this.$hiwebBase.JsonApi(cache.data);
-        this.isLoading = false;
-      }
+      // let cacheKey = 'products/' + this.slug + JSON.stringify({});
+      // let cache = this.$hiwebBase.cache.get(cacheKey);
+      // if (cache !== null) {
+      //   this.productJsonApi = new this.$hiwebBase.JsonApi(cache.data);
+      //   this.isLoading = false;
+      // }
 
       // data
       let find;

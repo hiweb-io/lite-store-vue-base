@@ -5,17 +5,49 @@ export default {
   data() {
 
     return {
-      selectedOptionValue: null
+      selectedOptionValue: null,
+      restOptionValues: [],
     };
 
   },
 
   created() {
 
+    this.selectedVariantMinPrice();
+
     // If only 1 variant available
-    if (this.variants && this.variants.length === 1) {
-      this.selectedOptionValue = this.variants[0].attributes['option' + this.index];
-    }
+    // if (this.variants && this.variants.length === 1) {
+    //   this.selectedOptionValue = this.variants[0].attributes['option' + this.index];
+    // }
+
+  },
+
+  mounted() {
+
+    this.$hiwebBase.event.$on('select-option-value', data => {
+
+      if (this.index > data.index) {
+
+        this.restOptionValues = [];
+        let firstValue;
+
+        for (var i = 0; i < this.variants.length; i++) {
+          if(!(this.variants[i].attributes['option' + data.index] == data.value)) {
+            this.restOptionValues = this.restOptionValues.concat(this.variants[i].attributes['option' + this.index]);
+          } else {
+            if (!firstValue) {
+              firstValue = this.variants[i].attributes['option' + this.index];
+            }
+          }
+        }
+
+        if (this.restOptionValues.includes(this.selectedOptionValue)) {
+          this.selectedOptionValue = firstValue;
+        }
+
+      }
+
+    })
 
   },
 
@@ -50,7 +82,23 @@ export default {
 
       });
 
-    }
+    },
+
+    selectedVariantMinPrice() {
+
+      if (this.optionValues.length) {
+
+        this.selectedOptionValue = this.optionValues[0];
+
+      }
+
+    },
+
+    selectValue(value) {
+      if (!this.restOptionValues.includes(value)) {
+        this.selectedOptionValue = value;
+      }
+    },
 
   },
 
@@ -58,6 +106,14 @@ export default {
 
     selectedOptionValue: function(value) {
       this.$parent.selectedOptions['option' + this.index] = value;
+
+      let data = {
+        'index': this.index,
+        'value': value,
+      };
+
+      this.$hiwebBase.event.$emit('select-option-value', data);
+
     }
 
   },
