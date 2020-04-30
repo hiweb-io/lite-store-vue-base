@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/hiweb-io/lite-store-vue-base",
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
